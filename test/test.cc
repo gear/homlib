@@ -94,6 +94,30 @@ void test_tree() {
   assert(hom.run() == homTree.run());
 }
 
+void test_double_cycles() {
+  int t = 6;
+  Graph T(t);
+  T.addEdge(0,1);
+  T.addEdge(0,2);
+  T.addEdge(0,3);
+  T.addEdge(1,3);
+  T.addEdge(1,5);
+  T.addEdge(2,3);
+  T.addEdge(2,5);
+
+  int n = 20;
+  Graph G(n);
+  for (int i = 0; i < n; ++i) {
+    for (int j = i+1; j < n; ++j) {
+      if (rand() % 2 == 0) {
+        G.addEdge(i, j);
+      }
+    }
+  }
+  HomomorphismCounting<int> hom(T, G);
+  hom.run();   
+}
+
 int main() {
   srand(time(0));
   test_count_vertex();
@@ -101,4 +125,5 @@ int main() {
   test_count_triangle();
   test2();
   test_tree();
+  test_double_cycles();
 }
